@@ -30,6 +30,8 @@ export default {
     display: flex;
     padding: 16px;
     position: relative;
+    justify-content: center;
+    align-items: center;
     z-index: 10;
 
     >.logo {
@@ -44,6 +46,16 @@ export default {
 
         >li {
             margin: 0 1em;
+        }
+    }
+
+    @media (max-width: 500px) {
+        >.menu {
+            display: none
+        }
+
+        >.logo {
+            margin: 0 auto
         }
     }
 }
