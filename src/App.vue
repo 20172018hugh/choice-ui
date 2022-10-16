@@ -3,12 +3,14 @@
 </template>
 
 <script lang="ts">
-import { provide,ref } from 'vue';
+import { provide, ref } from 'vue';
 export default {
   name: 'App',
-  setup(){
-    const menuVisiable = ref(false);
-    provide('menuVisiable',menuVisiable)
+  setup() {
+    //
+    const width = document.documentElement.clientWidth;
+    const menuVisiable = ref(width <= 500 ? false : true);
+    provide('menuVisiable', menuVisiable)
   }
 }
 </script>
