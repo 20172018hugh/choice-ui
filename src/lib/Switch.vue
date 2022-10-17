@@ -33,41 +33,41 @@ button {
     border-radius: $h/2;
     background: #bfbfbf;
     position: relative;
-}
-
-span {
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    height: $h2;
-    width: $h2;
-    border-radius: $h2/2;
-    background: white;
-    transition: all 200ms;
-}
-
-button.checked {
-    background: #1890ff;
 
     >span {
-        left:calc(100% - #{$h2} - 2px)
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        height: $h2;
+        width: $h2;
+        border-radius: $h2/2;
+        background: white;
+        transition: all 200ms;
     }
-}
 
-button:focus {
-    outline: none;
-}
+    &.checked {
+        background: #1890ff;
 
-button:active {
-    >span {
-        width: $h2 + 4px;
+        >span {
+            left:calc(100% - #{$h2} - 2px)
+        }
     }
-}
 
-button.checked:active {
-    >span {
-        width: $h2 + 4px;
-        margin-left: -4px;
+    &:focus {
+        outline: none;
+    }
+
+    &:active {
+        >span {
+            width: $h2 + 4px;
+        }
+    }
+
+    &.checked:active {
+        >span {
+            width: $h2 + 4px;
+            margin-left: -4px;
+        }
     }
 }
 </style>
