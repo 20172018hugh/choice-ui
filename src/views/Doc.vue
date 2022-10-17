@@ -66,7 +66,7 @@ export default {
         >main {
             flex-grow: 1;
             padding: 16px;
-            background: rgb(149, 212, 56);
+            background: #fff;
             overflow: auto;
         }
     }
