@@ -6,13 +6,17 @@ import { ref } from 'vue';
 
 export default {
     name: 'Switch',
-    setup() {
-        const checked = ref<boolean>(false);
+    props: {
+        checked: {
+            type: Boolean,
+            default: false,
+        }
+    },
+    setup(props, context) {
         const toggle = () => {
-            checked.value = !checked.value
+            context.emit('change', !props.checked)
         }
         return {
-            checked,
             toggle,
         }
     }
