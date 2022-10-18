@@ -1,7 +1,7 @@
 <template>
     <div>Button示例</div>
     <h1>示例1</h1>
-    <Button @click="onClick">你好</Button>
+    <Button @click="onClick" size="small" @mouseover="onClick">你好</Button>
 </template>
 <script>
 import Button from '../lib/Button.vue'
@@ -10,7 +10,7 @@ export default {
     components: { Button },
     setup() {
         const onClick = () => {
-            console.log('点击了button')
+            console.log('hi')
         }
         return {
             onClick,
