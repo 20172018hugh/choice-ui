@@ -1,21 +1,30 @@
 <template >
-    <button class="choice-button" :class="{[`choice-theme-${theme}`]:theme}">
+    <button class="choice-button" :class="classes">
         <slot />
     </button>
 </template>
-<script lang="ts">
+<script lang="ts">import { computed } from 'vue';
+
 export default {
     // inheritAttrs: false,//默认不继承属性
     // 实现属性分别绑定，按需绑定
     props: {
-        theme: { type: String, default: 'button' }
+        theme: { type: String, default: 'button' },
+        size: { type: String, default: 'normal' }
     },
-    setup(props, context) {
+    setup(props) {
         // const { size, ...rest } = context.attrs;
         // return {
         //     size,
         //     rest,
         // }
+        const classes = computed(() => ({
+            [`choice-theme-${props.theme}`]: props.theme,
+            [`choice-size-${props.size}`]: props.size,
+        }))
+        return {
+            classes,
+        }
     }
 }
 </script>
@@ -79,6 +88,20 @@ $radius: 4px;
         &:focus {
             background: darken(white, 5%);
             ;
+        }
+    }
+
+    &.choice-theme-button {
+        &.choice-size-big {
+            font-size: 24px;
+            height: 48px;
+            padding: 0 16px
+        }
+
+        &.choice-size-small {
+            font-size: 12px;
+            height: 20px;
+            padding: 0 4px;
         }
     }
 }
