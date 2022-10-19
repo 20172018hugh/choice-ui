@@ -1,5 +1,5 @@
 <template>
-    <button :class="{checked}" @click="toggle"><span></span></button>
+    <button class="choice-switch" :class="{'choice-checked':checked}" @click="toggle"><span></span></button>
 </template>
 <script lang="ts">
 import { ref } from 'vue';
@@ -26,7 +26,7 @@ export default {
 $h: 22px;
 $h2: $h - 4px;
 
-button {
+.choice-switch {
     height: $h;
     width: $h*2;
     border: none;
@@ -45,7 +45,7 @@ button {
         transition: all 200ms;
     }
 
-    &.checked {
+    &.choice-checked {
         background: #1890ff;
 
         >span {
@@ -63,7 +63,7 @@ button {
         }
     }
 
-    &.checked:active {
+    &.choice-checked:active {
         >span {
             width: $h2 + 4px;
             margin-left: -4px;
