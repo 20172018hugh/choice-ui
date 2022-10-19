@@ -1,5 +1,5 @@
 <template >
-    <button class="choice-button" :class="classes">
+    <button class="choice-button" :class="classes" :disabled="disabled">
         <slot />
     </button>
 </template>
@@ -12,6 +12,7 @@ export default {
         theme: { type: String, default: 'button' },
         size: { type: String, default: 'normal' },
         level: { type: String, defatul: 'normal' },
+        disabled: { type: Boolean, default: false },
     },
     setup(props) {
         // const { size, ...rest } = context.attrs;
@@ -37,6 +38,7 @@ $color: #333;
 $blue: #40a9ff;
 $radius: 4px;
 $red: #f56c6c;
+$grey: grey;
 
 .choice-button {
     box-sizing: border-box;
@@ -161,6 +163,25 @@ $red: #f56c6c;
             &:focus {
                 color: darken($red, 10%);
             }
+        }
+    }
+
+    &.choice-theme-button {
+        &[disabled] {
+            cursor: not-allowed;
+            color: $grey;
+
+            &:hover {
+                border-color: $grey;
+            }
+        }
+    }
+
+    &.choice-theme-link,
+    &.choice-theme-text {
+        &[disabled] {
+            cursor: not-allowed;
+            color: $grey;
         }
     }
 }
