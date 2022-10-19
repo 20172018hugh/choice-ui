@@ -1,23 +1,62 @@
 <template >
-    <div :size="size">
-        <button v-bind="rest">
-            <slot />
-        </button>
-    </div>
+    <button class="choice-button" :class="{[`theme-${theme}`]:theme}">
+        <slot />
+    </button>
 </template>
 <script lang="ts">
 export default {
-    inheritAttrs: false,//默认不继承属性
+    // inheritAttrs: false,//默认不继承属性
     // 实现属性分别绑定，按需绑定
+    props: {
+        theme: { type: String, default: 'button' }
+    },
     setup(props, context) {
-        const { size, ...rest } = context.attrs;
-        return {
-            size,
-            rest,
-        }
+        // const { size, ...rest } = context.attrs;
+        // return {
+        //     size,
+        //     rest,
+        // }
     }
 }
 </script>
-<style lang="">
-    
+<style lang="scss" scoped>
+$h: 32px;
+$border-color: #d9d9d9;
+$color: #333;
+$blue: #40a9ff;
+$radius: 4px;
+
+.choice-button {
+    box-sizing: border-box;
+    height: $h;
+    padding: 0 12px;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    background: white;
+    color: $color;
+    border: 1px solid $border-color;
+    border-radius: $radius;
+    box-shadow: 0 1px 0 fade-out(black, 0.95);
+
+    &+& {
+        margin-left: 8px;
+    }
+
+    &:hover,
+    &:focus {
+        color: $blue;
+        border-color: $blue;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &::-moz-focus-inner {
+        border: 0;
+    }
+}
 </style>
