@@ -1,18 +1,20 @@
 <template>
-    <div class="choice-dialog-overlay"></div>
-    <div class="choice-dialog-wrapper">
-        <div class="choice-dialog">
-            <header>标题 <span class="choice-dialog-close"></span></header>
-            <main>
-                <p>第一行字</p>
-                <p>第二行字</p>
-            </main>
-            <footer>
-                <Button level="main">OK</Button>
-                <Button>Cancel</Button>
-            </footer>
+    <template v-if="visible">
+        <div class="choice-dialog-overlay" @click="onClickOverlay"></div>
+        <div class="choice-dialog-wrapper">
+            <div class="choice-dialog">
+                <header>标题 <span class="choice-dialog-close" @click="close"></span></header>
+                <main>
+                    <p>第一行字</p>
+                    <p>第二行字</p>
+                </main>
+                <footer>
+                    <Button level="main" @click="ok">OK</Button>
+                    <Button @click="cancel">Cancel</Button>
+                </footer>
+            </div>
         </div>
-    </div>
+    </template>
 </template>
     
 <script lang="ts">
@@ -20,7 +22,49 @@ import Button from './Button.vue'
 export default {
     components: {
         Button
+    },
+    props: {
+        visible: {
+            type: Boolean,
+            default: false
+        },
+        closeOnClickOverlay: {
+            type: Boolean,
+            default: true
+        },
+        ok: {
+            type: Function
+        },
+        cancel: {
+            type: Function
+        }
+    },
+    setup(props, context) {
+        const close = () => {
+            context.emit('update:visible', false)
+        }
+        const onClickOverlay = () => {
+            if (props.closeOnClickOverlay) {
+                close()
+            }
+        }
+        const ok = () => {
+            if (props.ok?.() !== false) {
+                close()
+            }
+        }
+        const cancel = () => {
+            context.emit('cancel')
+            close()
+        }
+        return {
+            close,
+            onClickOverlay,
+            ok,
+            cancel
+        }
     }
+
 }
 </script>
 <style lang="scss">
