@@ -1,6 +1,6 @@
 <template >
     <div class="choice-tabs">
-        <div class="choice-tabs-nav">
+        <div class="choice-tabs-nav" ref="container">
             <div class="choice-tabs-nav-item" v-for="(t,index) in titles" :key="index" @click="select(t)"
                 :class="{selected: t=== selected}" :ref="el => { if (el) navItems[index] = el }">{{t}}
             </div>
@@ -13,7 +13,7 @@
 </template>
 <script lang="ts">
 import Tab from './Tab.vue'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, onUpdated, ref } from 'vue'
 export default {
     props: {
         selected: {
@@ -24,6 +24,7 @@ export default {
         const defaults = context.slots.default()
         const navItems = ref<HTMLDivElement[]>([])
         const indicator = ref<HTMLDivElement>(null)
+        const container = ref<HTMLDivElement>(null)
         defaults.forEach((tag) => {
             if (tag.type !== Tab) {
                 throw new Error('Tabs 子标签必须是 Tab')
@@ -33,27 +34,31 @@ export default {
             return tag.props.title
         })
         const current = computed(() => {
-            console.log('重新 return')
-            return defaults.find((tag) => {
-                return tag.props.title === props.selected
-            })
+            return defaults.find((tag) => tag.props.title === props.selected
+            )
         })
         const select = (title: string) => {
             context.emit('update:selected', title)
         }
-        onMounted(() => {
+        const x = () => {
             const divs = navItems.value
             const res = divs.find(div => div.classList.contains('selected'));
             const { width } = res.getBoundingClientRect()
             indicator.value.style.width = width + 'px';
-        })
+            const { left: left1 } = container.value.getBoundingClientRect()
+            const { left: left2 } = res.getBoundingClientRect()
+            indicator.value.style.left = (left2 - left1) + 'px'
+        }
+        onMounted(x)
+        onUpdated(x)
         return {
             defaults,
             titles,
             current,
             select,
             navItems,
-            indicator
+            indicator,
+            container,
         }
     }
 
@@ -91,6 +96,7 @@ $border-color: #d9d9d9;
             background: $blue;
             left: 0;
             bottom: -1px;
+            transition: all 250ms;
         }
     }
 
